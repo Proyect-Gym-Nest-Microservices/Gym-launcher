@@ -1,0 +1,3 @@
+[submodule "auth-ms"]
+	path = auth-ms
+	url = https://github.com/Proyect-Gym-Nest-Microservices/Auth-microservice.git
