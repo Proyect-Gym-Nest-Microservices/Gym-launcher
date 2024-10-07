@@ -4,3 +4,6 @@
 [submodule "client-gateway"]
 	path = client-gateway
 	url = https://github.com/Proyect-Gym-Nest-Microservices/client-gateway.git
+[submodule "user-ms"]
+	path = user-ms
+	url = https://github.com/Proyect-Gym-Nest-Microservices/User-Microservice.git
