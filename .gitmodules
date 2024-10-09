@@ -7,3 +7,6 @@
 [submodule "user-ms"]
 	path = user-ms
 	url = https://github.com/Proyect-Gym-Nest-Microservices/User-Microservice.git
+[submodule "notification-ms"]
+	path = notification-ms
+	url = https://github.com/Proyect-Gym-Nest-Microservices/Notification-Microservice.git
