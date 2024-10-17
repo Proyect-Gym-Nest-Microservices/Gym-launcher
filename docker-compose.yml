@@ -7,6 +7,8 @@ services:
       - 8222:8222
   
   auth-ms:
+    depends_on:
+      - nats-server
     build: ./auth-ms
     volumes:
       - ./auth-ms/src:/usr/src/app/src
@@ -20,6 +22,8 @@ services:
       - JWT_SECRET_RESET_PASSWORD=${JWT_SECRET_RESET_PASSWORD}
   
   user-ms:
+    depends_on:
+      - nats-server
     build: ./user-ms
     volumes:
       - ./user-ms/src:/usr/src/app/src
@@ -29,7 +33,10 @@ services:
       - NATS_SERVERS=nats://nats-server:4222
       - DATABASE_URL=${USER_DATABASE_URL}
 
+
   client-gateway:
+    depends_on:
+      - nats-server
     build: ./client-gateway
     ports:
       - ${CLIENT_GATEWAY_PORT}:3002
@@ -42,6 +49,8 @@ services:
       - NODE_ENV=${NODE_ENV}
   
   notification-ms:
+    depends_on:
+      - nats-server
     build: ./notification-ms
     volumes:
       - ./notification-ms/src:/usr/src/app/src
@@ -51,4 +60,3 @@ services:
       - SENDGRID_API_KEY=${SENDGRID_API_KEY}
       - SENDGRID_FROM_EMAIL=${SENDGRID_FROM_EMAIL}
       - SENDGRID_FROM_NAME=${SENDGRID_FROM_NAME}
-
