@@ -10,3 +10,6 @@
 [submodule "notification-ms"]
 	path = notification-ms
 	url = https://github.com/Proyect-Gym-Nest-Microservices/Notification-Microservice.git
+[submodule "training-ms"]
+	path = training-ms
+	url = https://github.com/Proyect-Gym-Nest-Microservices/training-ms.git
