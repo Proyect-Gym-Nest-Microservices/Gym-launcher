@@ -33,6 +33,20 @@ services:
       - NATS_SERVERS=nats://nats-server:4222
       - DATABASE_URL=${USER_DATABASE_URL}
 
+  training-ms:
+    depends_on:
+      - nats-server
+      - training-db
+    build: ./training-ms
+    volumes:
+      - ./training-ms/src:/usr/src/app/src
+    command: npm run start:dev
+    environment:
+      - PORT=3006
+      - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=${TRAINING_DATABASE_URL}
+
+
 
   client-gateway:
     depends_on:
@@ -60,3 +74,16 @@ services:
       - SENDGRID_API_KEY=${SENDGRID_API_KEY}
       - SENDGRID_FROM_EMAIL=${SENDGRID_FROM_EMAIL}
       - SENDGRID_FROM_NAME=${SENDGRID_FROM_NAME}
+
+  training-db:
+    container_name: training_database
+    image: postgres:16.2
+    #restart: always
+    volumes:
+      - ./training-ms/postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=trainingdb
