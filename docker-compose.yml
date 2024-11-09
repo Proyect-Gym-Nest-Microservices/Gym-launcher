@@ -43,7 +43,7 @@ services:
     command: npm run start:dev
     environment:
       - PORT=3006
-      - NATS_SERVERS=nats://nats-server:4222
+      - NATS_SERVERS=nats://localhost:4222
       - DATABASE_URL=${TRAINING_DATABASE_URL}
 
 
@@ -76,7 +76,6 @@ services:
       - SENDGRID_FROM_NAME=${SENDGRID_FROM_NAME}
 
   training-db:
-    container_name: training_database
     image: postgres:16.2
     #restart: always
     volumes:
