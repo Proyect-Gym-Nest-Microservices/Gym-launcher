@@ -15,7 +15,7 @@ services:
     command: npm run start:dev
     environment:
       - PORT=3005
-      - NATS_SERVERS=nats://nats-server:4222
+      - NATS_SERVERS=${NATS_SERVERS}
       - DATABASE_URL=${AUTH_DATABASE_URL}
       - JWT_SECRET_ACCESS=${JWT_SECRET_ACCESS}
       - JWT_SECRET_REFRESH=${JWT_SECRET_REFRESH}
@@ -30,7 +30,7 @@ services:
     command: npm run start:dev
     environment:
       - PORT=3004
-      - NATS_SERVERS=nats://nats-server:4222
+      - NATS_SERVERS=${NATS_SERVERS}
       - DATABASE_URL=${USER_DATABASE_URL}
 
   training-ms:
@@ -43,7 +43,7 @@ services:
     command: npm run start:dev
     environment:
       - PORT=3006
-      - NATS_SERVERS=nats://localhost:4222
+      - NATS_SERVERS=${NATS_SERVERS}
       - DATABASE_URL=${TRAINING_DATABASE_URL}
 
 
@@ -59,7 +59,7 @@ services:
     command: npm run start:dev
     environment:
       - PORT=3002
-      - NATS_SERVERS=nats://nats-server:4222
+      - NATS_SERVERS=${NATS_SERVERS}
       - NODE_ENV=${NODE_ENV}
   
   notification-ms:
@@ -70,7 +70,7 @@ services:
       - ./notification-ms/src:/usr/src/app/src
     command: npm run start:dev
     environment:
-      - NATS_SERVERS=nats://nats-server:4222
+      - NATS_SERVERS=${NATS_SERVERS}
       - SENDGRID_API_KEY=${SENDGRID_API_KEY}
       - SENDGRID_FROM_EMAIL=${SENDGRID_FROM_EMAIL}
       - SENDGRID_FROM_NAME=${SENDGRID_FROM_NAME}
