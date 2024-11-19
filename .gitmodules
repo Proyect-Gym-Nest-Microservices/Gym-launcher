@@ -13,3 +13,6 @@
 [submodule "training-ms"]
 	path = training-ms
 	url = https://github.com/Proyect-Gym-Nest-Microservices/training-ms.git
+[submodule "nutrition-ms"]
+	path = nutrition-ms
+	url = https://github.com/Proyect-Gym-Nest-Microservices/nutrition-microservice.git
