@@ -16,3 +16,6 @@
 [submodule "nutrition-ms"]
 	path = nutrition-ms
 	url = https://github.com/Proyect-Gym-Nest-Microservices/nutrition-microservice.git
+[submodule "analytics-ms"]
+	path = analytics-ms
+	url = https://github.com/Proyect-Gym-Nest-Microservices/Analytics-ms.git
