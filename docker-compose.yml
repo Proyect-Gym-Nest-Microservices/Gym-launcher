@@ -18,21 +18,19 @@ services:
       - NATS_SERVERS=${NATS_SERVERS}
       - DATABASE_URL=${NUTRITION_DATABASE_URL}
 
-  analytics-ms:
-    depends_on:
-      - nats-server
-    build: ./analytics-ms
-    volumes:
-      - ./analytics-ms/src:/usr/src/app/src
-    command: npm run start:dev
-    environment:
-      - PORT=3008
-      - NATS_SERVERS=${NATS_SERVERS}
-      - DATABASE_URL=${ANALYTIC_DATABASE_URL}
+  #analytics-ms:
+  #  depends_on:
+  #    - nats-server
+  #  build: ./analytics-ms
+  #  volumes:
+  #    - ./analytics-ms/src:/usr/src/app/src
+  #  command: npm run start:dev
+  #  environment:
+  #    - PORT=3008
+  #    - NATS_SERVERS=${NATS_SERVERS}
+  #    - DATABASE_URL=${ANALYTIC_DATABASE_URL}
 
     
-
-
 
   auth-ms:
     depends_on:
@@ -91,18 +89,18 @@ services:
       - NATS_SERVERS=${NATS_SERVERS}
       - NODE_ENV=${NODE_ENV}
   
-  notification-ms:
-    depends_on:
-      - nats-server
-    build: ./notification-ms
-    volumes:
-      - ./notification-ms/src:/usr/src/app/src
-    command: npm run start:dev
-    environment:
-      - NATS_SERVERS=${NATS_SERVERS}
-      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
-      - SENDGRID_FROM_EMAIL=${SENDGRID_FROM_EMAIL}
-      - SENDGRID_FROM_NAME=${SENDGRID_FROM_NAME}
+  #notification-ms:
+  #  depends_on:
+  #    - nats-server
+  #  build: ./notification-ms
+  #  volumes:
+  #    - ./notification-ms/src:/usr/src/app/src
+  #  command: npm run start:dev
+  #  environment:
+  #    - NATS_SERVERS=${NATS_SERVERS}
+  #    - SENDGRID_API_KEY=${SENDGRID_API_KEY}
+  #    - SENDGRID_FROM_EMAIL=${SENDGRID_FROM_EMAIL}
+  #    - SENDGRID_FROM_NAME=${SENDGRID_FROM_NAME}
 
   training-db:
     image: postgres:16.2
