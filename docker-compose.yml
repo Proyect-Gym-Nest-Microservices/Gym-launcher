@@ -6,29 +6,29 @@ services:
     ports:
       - 8222:8222
   
-  nutrition-ms:
-    depends_on:
-      - nats-server
-    build: ./nutrition-ms
-    volumes:
-      - ./nutrition-ms/src:/usr/src/app/src
-    command: npm run start:dev
-    environment:
-      - PORT=3007
-      - NATS_SERVERS=${NATS_SERVERS}
-      - DATABASE_URL=${NUTRITION_DATABASE_URL}
-
-  #analytics-ms:
+  #nutrition-ms:
   #  depends_on:
   #    - nats-server
-  #  build: ./analytics-ms
+  #  build: ./nutrition-ms
   #  volumes:
-  #    - ./analytics-ms/src:/usr/src/app/src
+  #    - ./nutrition-ms/src:/usr/src/app/src
   #  command: npm run start:dev
   #  environment:
-  #    - PORT=3008
+  #    - PORT=3007
   #    - NATS_SERVERS=${NATS_SERVERS}
-  #    - DATABASE_URL=${ANALYTIC_DATABASE_URL}
+  #    - DATABASE_URL=${NUTRITION_DATABASE_URL}
+
+  analytics-ms:
+    depends_on:
+      - nats-server
+    build: ./analytics-ms
+    volumes:
+      - ./analytics-ms/src:/usr/src/app/src
+    command: npm run start:dev
+    environment:
+      - PORT=3008
+      - NATS_SERVERS=${NATS_SERVERS}
+      - DATABASE_URL=${ANALYTIC_DATABASE_URL}
 
     
 
