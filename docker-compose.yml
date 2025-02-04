@@ -1,36 +1,9 @@
 version: '3'
-
 services:
   nats-server:
     image: nats:latest
     ports:
       - 8222:8222
-  
-  nutrition-ms:
-    depends_on:
-      - nats-server
-    build: ./nutrition-ms
-    volumes:
-      - ./nutrition-ms/src:/usr/src/app/src
-    command: npm run start:dev
-    environment:
-      - PORT=3007
-      - NATS_SERVERS=${NATS_SERVERS}
-      - DATABASE_URL=${NUTRITION_DATABASE_URL}
-
-  analytics-ms:
-    depends_on:
-      - nats-server
-    build: ./analytics-ms
-    volumes:
-      - ./analytics-ms/src:/usr/src/app/src
-    command: npm run start:dev
-    environment:
-      - PORT=3008
-      - NATS_SERVERS=${NATS_SERVERS}
-      - DATABASE_URL=${ANALYTIC_DATABASE_URL}
-
-    
 
   auth-ms:
     depends_on:
@@ -43,6 +16,7 @@ services:
       - PORT=3005
       - NATS_SERVERS=${NATS_SERVERS}
       - DATABASE_URL=${AUTH_DATABASE_URL}
+      - DATABASE_URL_TEST=${AUTH_DATABASE_URL_TEST}
       - JWT_SECRET_ACCESS=${JWT_SECRET_ACCESS}
       - JWT_SECRET_REFRESH=${JWT_SECRET_REFRESH}
       - JWT_SECRET_RESET_PASSWORD=${JWT_SECRET_RESET_PASSWORD}
@@ -58,6 +32,33 @@ services:
       - PORT=3004
       - NATS_SERVERS=${NATS_SERVERS}
       - DATABASE_URL=${USER_DATABASE_URL}
+      - DATABASE_URL_TEST=${USER_DATABASE_URL_TEST}
+
+  #nutrition-ms:
+  #  depends_on:
+  #    - nats-server
+  #  build: ./nutrition-ms
+  #  volumes:
+  #    - ./nutrition-ms/src:/usr/src/app/src
+  #  command: npm run start:dev
+  #  environment:
+  #    - PORT=3007
+  #    - NATS_SERVERS=${NATS_SERVERS}
+  #    - DATABASE_URL=${NUTRITION_DATABASE_URL}
+  #    - DATABASE_URL_TEST=${NUTRITION_DATABASE_URL_TEST}
+
+  #analytics-ms:
+  #  depends_on:
+  #    - nats-server
+  #  build: ./analytics-ms
+  #  volumes:
+  #    - ./analytics-ms/src:/usr/src/app/src
+  #  command: npm run start:dev
+  #  environment:
+  #    - PORT=3008
+  #    - NATS_SERVERS=${NATS_SERVERS}
+  #    - DATABASE_URL=${ANALYTIC_DATABASE_URL}
+
 
   training-ms:
     depends_on:
@@ -71,9 +72,19 @@ services:
       - PORT=3006
       - NATS_SERVERS=${NATS_SERVERS}
       - DATABASE_URL=${TRAINING_DATABASE_URL}
+      - DATABASE_URL_TEST=${TRAINING_DATABASE_URL_TEST}
 
-
-
+  training-db:
+    image: postgres:16.2
+    #restart: always
+    volumes:
+      - ./training-ms/postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
 
   client-gateway:
     depends_on:
@@ -89,27 +100,18 @@ services:
       - NATS_SERVERS=${NATS_SERVERS}
       - NODE_ENV=${NODE_ENV}
   
-  notification-ms:
-    depends_on:
-      - nats-server
-    build: ./notification-ms
-    volumes:
-      - ./notification-ms/src:/usr/src/app/src
-    command: npm run start:dev
-    environment:
-      - NATS_SERVERS=${NATS_SERVERS}
-      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
-      - SENDGRID_FROM_EMAIL=${SENDGRID_FROM_EMAIL}
-      - SENDGRID_FROM_NAME=${SENDGRID_FROM_NAME}
+  #notification-ms:
+  #  depends_on:
+  #    - nats-server
+  #  build: ./notification-ms
+  #  volumes:
+  #    - ./notification-ms/src:/usr/src/app/src
+  #  command: npm run start:dev
+  #  environment:
+  #    - NATS_SERVERS=${NATS_SERVERS}
+  #    - SENDGRID_API_KEY=${SENDGRID_API_KEY}
+  #    - SENDGRID_FROM_EMAIL=${SENDGRID_FROM_EMAIL}
+  #    - SENDGRID_FROM_NAME=${SENDGRID_FROM_NAME}
 
-  training-db:
-    image: postgres:16.2
-    #restart: always
-    volumes:
-      - ./training-ms/postgres:/var/lib/postgresql/data
-    ports:
-      - 5432:5432
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=123456
-      - POSTGRES_DB=trainingdb
+
+
